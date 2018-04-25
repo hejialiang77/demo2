@@ -1,4 +1,4 @@
-package com.chris.demo.druid;
+package com.chris.demo.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
@@ -29,7 +29,7 @@ public class DruidConfiguration {
     @Bean
     public ServletRegistrationBean druidServlet() {
         logger.info("init Druid Servlet Configuration ");
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/config/*");
         // IP白名单
         servletRegistrationBean.addInitParameter("allow", "192.168.2.25,127.0.0.1");
         // IP黑名单(共同存在时，deny优先于allow)
@@ -46,7 +46,7 @@ public class DruidConfiguration {
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
         filterRegistrationBean.addUrlPatterns("/*");
-        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/config/*");
         return filterRegistrationBean;
     }
 
@@ -98,7 +98,7 @@ public class DruidConfiguration {
             try {
                 datasource.setFilters(filters);
             } catch (SQLException e) {
-                System.err.println("druid configuration initialization filter: " + e);
+                System.err.println("config configuration initialization filter: " + e);
             }
             datasource.setConnectionProperties(connectionProperties);
             return datasource;
