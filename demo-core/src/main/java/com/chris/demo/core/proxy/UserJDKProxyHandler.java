@@ -4,8 +4,8 @@
  */
 package com.chris.demo.core.proxy;
 
-import com.chris.demo.service.IUserService;
-import com.chris.demo.service.impl.UserService;
+import com.chris.demo.core.service.IUserService;
+import com.chris.demo.core.service.impl.UserService;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

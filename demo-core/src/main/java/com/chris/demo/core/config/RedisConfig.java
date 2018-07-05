@@ -1,28 +1,43 @@
-package com.chris.demo.core.cache;
+package com.chris.demo.core.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import java.time.Duration;
+
+/**
+ * RedisConfig
+ *
+ * @ClassName RedisConfig
+ * @Author jlhe
+ * @Date 2018/7/5 17:27
+ * @Version 1.0
+ */
 @EnableCaching
+@Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
-    //@Value("${spring.redis.host}")
-    //private String host;
-    //@Value("${spring.redis.port}")
-    //private int port;
-    //@Value("${spring.redis.timeout}")
-    //private int timeout;
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory factory) {
+        RedisCacheConfiguration cacheConfiguration =
+                RedisCacheConfiguration.defaultCacheConfig()
+                        .entryTtl(Duration.ofDays(1))
+                        .disableCachingNullValues()
+                        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new
+                                GenericJackson2JsonRedisSerializer()));
+        return RedisCacheManager.builder(factory).cacheDefaults(cacheConfiguration).build();
+    }
 
+
+    /*  spring boot 1.0
     @Bean
     public CacheManager cacheManager(StringRedisTemplate template) {
         RedisCacheManager cacheManager = new RedisCacheManager(template);
@@ -49,4 +64,5 @@ public class RedisConfig extends CachingConfigurerSupport {
         template.setKeySerializer(jackson2JsonRedisSerializer);
         template.setDefaultSerializer(jackson2JsonRedisSerializer);
     }
+    */
 }

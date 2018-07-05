@@ -5,6 +5,7 @@
 package com.chris.demo.core.tr;
 
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.chris.demo.facade.IDubboService;
 
 /**
@@ -12,7 +13,9 @@ import com.chris.demo.facade.IDubboService;
  * @author chris
  * @version $Id: DubboService.java, v 0.1 2018年04月25日 下午2:57 chris Exp $
  */
+@Service
 public class DubboService implements IDubboService {
+
     @Override
     public String sayHello() {
         return "hello world";
