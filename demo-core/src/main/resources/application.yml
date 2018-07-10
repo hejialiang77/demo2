@@ -3,7 +3,7 @@ spring:
         name: demo-core
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://192.168.20.11:3306/accp_customer
+        url: jdbc:mysql://192.168.20.11:3306/accp_customer_dev
         username: accp_customer
         password: accp_customer
         driver-class-name: com.mysql.jdbc.Driver
@@ -73,8 +73,6 @@ mybatis:
 eureka:
     instance:
         hostname: localhost
-        statusPageUrlPath: ${management.context-path}/info
-        healthCheckUrlPath: ${management.context-path}/health
     client:
         registerWithEureka: true
         fetchRegistry: true
