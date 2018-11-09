@@ -1,7 +1,6 @@
 package com.chris.demo.core.controller;
 
-import com.chris.demo.core.dao.UserMapper;
-import com.chris.demo.core.domain.User;
+import com.chris.demo.core.util.XF04RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,18 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestBootController {
 
     @Autowired
-    UserMapper userMapper;
+    XF04RecordService xf04RecordService;
 
     @RequestMapping(value = "/test" ,method = RequestMethod.GET)
-    public User getUser() {
-        User user;
-        //user.setName("chris");
-        //user.setAge(27);
-
-        userMapper.updataById("1","chrisCache");
-        user = userMapper.selectByPrimaryKey("1");
-
-
-        return user;
+    public void getUser() {
+        xf04RecordService.readFile();
+        return ;
     }
 }

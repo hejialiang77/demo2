@@ -1,4 +1,4 @@
-package com.chris.demo.core.dao;
+package com.chris.demo.core.auto.mapper;
 
 import com.chris.demo.core.domain.User;
 import org.apache.ibatis.annotations.Param;
