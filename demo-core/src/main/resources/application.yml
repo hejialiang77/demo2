@@ -70,6 +70,7 @@ spring:
             retries: 0
 mybatis:
     mapper-locations: classpath*:/mapper/*Mapper.xml
+    type-handlers-package: com.chris.demo.core.config
 eureka:
     instance:
         hostname: localhost

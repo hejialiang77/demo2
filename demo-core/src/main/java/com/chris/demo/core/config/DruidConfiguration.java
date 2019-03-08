@@ -53,7 +53,7 @@
 //    //解决 spring.datasource.filters=stat,wall,log4j 无法正常注册进去
 //    @Data
 //    @ConfigurationProperties(prefix = DB_PREFIX)
-//    class IDataSourceProperties {
+//    public class IDataSourceProperties {
 //        private String url;
 //        private String username;
 //        private String password;

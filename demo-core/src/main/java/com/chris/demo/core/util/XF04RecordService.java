@@ -35,7 +35,7 @@ public class XF04RecordService {
     @Autowired
     Xf04RecordDao xf04RecordDao;
 
-    static final String dirName = "E:\\xf04银行对账\\njymmjour7";
+    static final String dirName = "E:\\xf04银行对账\\njymmjour9";
     private long lineCount = 0L;
 
     public String readFile() {
