@@ -2,7 +2,6 @@ spring:
   application:
     name: demo-core
   datasource:
-    name: 测试库
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/accp_payment
     username: accp_payment
@@ -15,7 +14,7 @@ spring:
         stat:
           db-type: mysql
           log-slow-sql: true
-          slow-sql-millis: 3000
+          slow-sql-millis: 2000
       initial-size: 30
       max-active: 150
       max-pool-prepared-statement-per-connection-size: 5
@@ -47,7 +46,7 @@ spring:
         allow: 192.168.1.110,127.0.0.1
         deny: 192.168.16.111
   thymeleaf:
-    suffix: .html
+    suffix: .html                 //指定走缀类型
     mode: LEGACYHTML5
     encoding: UTF-8
     cache: false
@@ -67,7 +66,7 @@ spring:
   dubbo:
     application:
       name: demo-provider
-    base-package: com.chris.demo.core.service
+    base-package: com.chris.demo.service
     registry:
       address: 192.168.162.95
       port: 2181

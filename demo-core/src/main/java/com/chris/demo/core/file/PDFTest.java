@@ -1,5 +1,6 @@
-package com.chris.demo.core.util;
+package com.chris.demo.core.file;
 
+import com.chris.demo.core.util.NoBorderCell;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -9,7 +10,10 @@ import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
 import com.itextpdf.layout.borders.DottedBorder;
-import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.LineSeparator;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
@@ -21,18 +25,18 @@ public class PDFTest {
     private static final String DEST2 = "E:\\temp\\testDetail.pdf";//文件路径
 
     public static void test(String dest) throws Exception {
-        detailReci(dest);
-//        batchReci(dest);
+//        detailReci(dest);
+        batchReci();
     }
 
-    private static void batchReci(String dest) throws Exception {
+    private static void batchReci() throws Exception {
+        String dest = "E:\\temp\\testBatch.pdf";
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
-        Date startDt = new Date();
-        System.out.println(startDt);
         PdfFont sysFont = PdfFontFactory.createFont("STSongStd-Light", "UniGB-UCS2-H", false);//中文字体
         Document doc = new Document(pdfDoc);//构建文档对象
         doc.setFont(sysFont);
-        doc.add(new Paragraph("连连银通电子支付明细回单").setTextAlignment(TextAlignment.CENTER));
+        doc.add(new Paragraph("叧叨呓囊囋囍囎囏囐嘱囒啮囔囕囖").setTextAlignment(TextAlignment.CENTER));
+        doc.add(new Paragraph("犇").setTextAlignment(TextAlignment.CENTER));
         doc.add(new LineSeparator(new SolidLine()).setMarginTop(10f));
         Table batchTable = new Table(new float[]{6, 6})
                 .setWidth(UnitValue.createPercentValue(80))
@@ -48,8 +52,6 @@ public class PDFTest {
         batchTable.addCell(new NoBorderCell("合计金额:"));
         batchTable.addCell(new NoBorderCell("申请时间:"));
         batchTable.addCell(new NoBorderCell("完成时间:"));
-        Date date1 = new Date();
-        System.out.println(date1.getTime() - startDt.getTime());
         Table table = new Table(new float[]{2f, 2.5f, 3.5f, 2f, 2f})
                 .setWidth(UnitValue.createPercentValue(80))
                 .setHorizontalAlignment(HorizontalAlignment.CENTER)
@@ -59,7 +61,7 @@ public class PDFTest {
         table.addHeaderCell("工资卡");
         table.addHeaderCell("实发金额");
         table.addHeaderCell("交易结果");
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 100; i++) {
             table.addCell("姓名" + i);
             table.addCell("1234567");
             table.addCell("6222020202020202000");
@@ -68,14 +70,9 @@ public class PDFTest {
         }
         doc.add(batchTable);
         doc.add(table);//将表格添加入文档并页面居中
-        Date date2 = new Date();
-        System.out.println(date2.getTime() - startDt.getTime());
         //盖章
         addSeal(doc);
         doc.close();
-        Date endDt = new Date();
-        System.out.println(endDt);
-        System.out.println(endDt.getTime() - startDt.getTime());
     }
 
     private static void detailReci(String dest) throws Exception {
@@ -118,10 +115,11 @@ public class PDFTest {
         doc.close();
     }
    private static void addSeal( Document doc) throws MalformedURLException {
-//        Image maru  = new Image(ImageDataFactory.create("E:\\temp\\walletseal.PNG"));
-//        maru.setFixedPosition(400, 100);           // 控制图片位置
-//        maru.scaleAbsolute(100, 80);                  // 控制图片大小
-//        doc.add(maru);
+        Image maru  = new Image(ImageDataFactory.create("E:\\temp\\walletseal.PNG"));
+        maru.scaleAbsolute(100, 80);                  // 控制图片大小
+       maru.setMarginTop(-100);
+       maru.setMarginLeft(400);
+        doc.add(maru);
     }
 
     public static void main(String[] args) throws Exception {

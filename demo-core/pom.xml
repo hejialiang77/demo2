@@ -27,7 +27,11 @@
             <version>7.1.0</version>
             <type>pom</type>
         </dependency>
-
+        <dependency>
+            <groupId>org.jboss.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>3.2.2.Final</version>
+        </dependency>
         <!--springboot 工具包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,14 +54,6 @@
             <artifactId>commons-pool2</artifactId>
             <version>2.4.3</version>
         </dependency>
-        <!-- <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-         </dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -115,6 +111,15 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>3.10-FINAL</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
 
