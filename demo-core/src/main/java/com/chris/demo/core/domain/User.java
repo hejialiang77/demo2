@@ -18,4 +18,6 @@ public class User implements Serializable{
     int id;
     private String name;
     int age;
+
+    UserFile userFile;
 }

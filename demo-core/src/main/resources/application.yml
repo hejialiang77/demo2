@@ -4,9 +4,9 @@ spring:
   datasource:
     name: 测试库
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/accp_payment
-    username: accp_payment
-    password: accp_payment
+    url: jdbc:mysql://127.0.0.1:3306/chris
+    username: root
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
     druid:
       aop-patterns: com.chris.demo.core.*

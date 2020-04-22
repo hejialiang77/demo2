@@ -1,11 +1,11 @@
 package com.chris.demo.core.file;
 
 import com.chris.demo.core.util.NoBorderCell;
+import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
@@ -18,21 +18,36 @@ import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
 
 public class PDFTest {
     private static final String DEST2 = "E:\\temp\\testDetail.pdf";//文件路径
+    private static final String SRC = "E:\\temp\\testDetail.pdf";//文件路径
+    private static final String DEST = "E:\\temp\\dest.pdf";//文件路径
+
+    private static  PdfFont sysFont;//中文字体
+
+    static {
+        try {
+            sysFont = PdfFontFactory.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void test(String dest) throws Exception {
-//        detailReci(dest);
-        batchReci();
+        detailReci(dest);
+//        batchReci();
     }
 
     private static void batchReci() throws Exception {
         String dest = "E:\\temp\\testBatch.pdf";
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
-        PdfFont sysFont = PdfFontFactory.createFont("STSongStd-Light", "UniGB-UCS2-H", false);//中文字体
         Document doc = new Document(pdfDoc);//构建文档对象
         doc.setFont(sysFont);
         doc.add(new Paragraph("叧叨呓囊囋囍囎囏囐嘱囒啮囔囕囖").setTextAlignment(TextAlignment.CENTER));
@@ -75,12 +90,38 @@ public class PDFTest {
         doc.close();
     }
 
+
+    private static void readAndReplace() throws Exception {
+        PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(DEST));
+        PdfReader reader = new PdfReader(SRC);
+
+        PdfAcroForm acroForm = PdfAcroForm.getAcroForm(pdfDoc, true);
+        Map fields = acroForm.getFormFields();
+        fields.forEach((o, o2) -> {
+            System.out.println(o);
+            System.out.println(o2);
+        });
+
+        PdfPage page = pdfDoc.getFirstPage();
+        PdfDictionary dict = page.getPdfObject();
+        PdfObject object = dict.get(PdfName.Contents);
+        if (object instanceof PdfStream) {
+            PdfStream stream = (PdfStream) object;
+            byte[] data = stream.getBytes();
+            String content = new String(data);
+            stream.setData(content.replace("批次号", "HELLO WORLD").getBytes(StandardCharsets.UTF_8));
+        }
+        pdfDoc.close();
+    }
+
     private static void detailReci(String dest) throws Exception {
+        long startDt = new Date().getTime();
+        System.out.println(startDt);
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         PdfFont sysFont = PdfFontFactory.createFont("STSong-Light", "UniGB-UCS2-H", false);//中文字体
         Document doc = new Document(pdfDoc);//构建文档对象
         doc.setFont(sysFont);
-        doc.add(new Paragraph("连连银通电子支付凭证").setTextAlignment(TextAlignment.CENTER));
+        doc.add(new Paragraph("abcdefghi").setTextAlignment(TextAlignment.CENTER));
         doc.add(new LineSeparator(new SolidLine()).setMarginTop(10f));
         Style boldStyle = new Style()
                 .setBorderTop(new DottedBorder(1.0f))
@@ -95,7 +136,7 @@ public class PDFTest {
         table.addCell(new NoBorderCell(1, 2, "付款方信息").addStyle(boldStyle));
         table.addCell(new NoBorderCell("户名"));
         table.addCell(new NoBorderCell("账号:"));
-        table.addCell(new NoBorderCell(1, 2,"开户单位:"));
+        table.addCell(new NoBorderCell(1, 2, "开户单位:"));
         table.addCell(new NoBorderCell(1, 2, "收款方信息").addStyle(boldStyle));
         table.addCell(new NoBorderCell("户名:"));
         table.addCell(new NoBorderCell("账号:"));
@@ -113,17 +154,22 @@ public class PDFTest {
         //盖章
         addSeal(doc);
         doc.close();
+        long endDt = new Date().getTime();
+        System.out.println(endDt - startDt);
+
     }
-   private static void addSeal( Document doc) throws MalformedURLException {
-        Image maru  = new Image(ImageDataFactory.create("E:\\temp\\walletseal.PNG"));
+
+    private static void addSeal(Document doc) throws MalformedURLException {
+        Image maru = new Image(ImageDataFactory.create("E:\\temp\\walletseal.PNG"));
         maru.scaleAbsolute(100, 80);                  // 控制图片大小
-       maru.setMarginTop(-100);
-       maru.setMarginLeft(400);
+        maru.setMarginTop(-100);
+        maru.setMarginLeft(400);
         doc.add(maru);
     }
 
     public static void main(String[] args) throws Exception {
         test(DEST2);
+        readAndReplace();
     }
 
 }

@@ -8,12 +8,10 @@
  */
 package com.chris.demo.core.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version $Id: PageController.java, v 0.1 2018年11月7日 上午11:20:18 wuliang Exp $
  */
 @Controller
+@Slf4j
 public class BasePageController {
 
     @GetMapping(value = "/")

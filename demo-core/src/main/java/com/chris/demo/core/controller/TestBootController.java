@@ -1,15 +1,13 @@
 package com.chris.demo.core.controller;
 
+import com.chris.demo.core.domain.User;
 import com.chris.demo.core.util.XF04RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +25,14 @@ public class TestBootController {
     public void getUser() {
 //        xf04RecordService.readFile();
         return;
+    }
+    @RequestMapping(value = "/test2")
+    public User getUser2(@RequestBody User user) {
+        user.setId(1);
+        user.setName("2");
+        user.setAge(3);
+
+        return user;
     }
 
     @RequestMapping(value = "/payrollDemoDownload", method = RequestMethod.GET)
