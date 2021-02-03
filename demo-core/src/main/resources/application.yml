@@ -55,7 +55,7 @@ spring:
       content-type: text/html
   redis:
     database: 0
-    host: 192.168.110.95
+    host: 127.0.0.1
     port: 6379
     password: 1234567
     lettuce:
@@ -69,7 +69,7 @@ spring:
       name: demo-provider
     base-package: com.chris.demo.core.service
     registry:
-      address: 192.168.162.95
+      address: 127.0.0.1
       port: 2181
     protocol:
       name: dubbo
