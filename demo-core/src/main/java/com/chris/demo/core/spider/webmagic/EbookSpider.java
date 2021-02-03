@@ -9,7 +9,7 @@ import us.codecraft.webmagic.scheduler.FileCacheQueueScheduler;
 /**
  * todo
  *
- * @ClassName EbookSpider
+ * @ClassName EbookSpiderw
  * @Author jlhe
  * @Date 2019/7/9
  * @Version 1.0
