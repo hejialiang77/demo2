@@ -92,20 +92,19 @@ public class StringTests {
 	 */
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 		ListNode dummyHead = new ListNode(0);
-		ListNode p = l1, q = l2, curr = dummyHead;
 		int carry = 0;
-		while (p != null || q != null) {
-			int x = (p != null) ? p.val : 0;
-			int y = (q != null) ? q.val : 0;
+		while (l1 != null || l2 != null) {
+			int x = (l1 != null) ? l1.val : 0;
+			int y = (l2 != null) ? l2.val : 0;
 			int sum = carry + x + y;
 			carry = sum / 10;
-			curr.next = new ListNode(sum % 10);
-			curr = curr.next;
-			if (p != null) p = p.next;
-			if (q != null) q = q.next;
+            dummyHead.next = new ListNode(sum % 10);
+            dummyHead = dummyHead.next;
+			if (l1 != null) l1 = l1.next;
+			if (l2 != null) l2 = l2.next;
 		}
 		if (carry > 0) {
-			curr.next = new ListNode(carry);
+            dummyHead.next = new ListNode(carry);
 		}
 		return dummyHead.next;
 	}
@@ -169,7 +168,7 @@ public class StringTests {
 
 	@Test
 	public void longestPalindromeTest() {
-		String res = longestPalindrome("a");
+		String res = longestPalindrome("asdfaseeeesrwqerqwsdafca");
 		System.out.println(res);
 	}
 
@@ -216,7 +215,9 @@ public class StringTests {
 	public void convertTest() {
 		System.out.println(Integer.MAX_VALUE);
 
-		String res = convert("123456789", 3);
+//		String res = convert("123456789", 3);
+//		String res = convert2("PAYPALISHIRING", 3);
+		String res = convert2("123456789", 4);
 		System.out.println(res);
 	}
 
@@ -246,6 +247,42 @@ public class StringTests {
 			sb.append(stringBuilder);
 		}
 		return sb.toString();
+
+	}
+
+	/**
+	 * 将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+	 *
+	 * @param s
+	 * @param numRows
+	 * @return
+	 */
+	public String convert2(String s, int numRows) {
+        //长度
+        if (s.length() <= 2 || numRows == 1) {
+            return s;
+        }
+        int offset = 0;
+        int tmp = (numRows - 1) * 2;
+        List<StringBuilder> target = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            offset = i % tmp;
+            //初始化  4<= 4 < 6
+            if (offset >= numRows) {
+                offset = tmp - offset;
+            }
+            System.out.println(offset);
+            //这里初始化
+            if (offset > target.size() - 1) {
+                target.add(new StringBuilder());
+            }
+            target.get(offset).append(s.charAt(i));
+        }
+        StringBuilder sb = new StringBuilder();
+        for (StringBuilder stringBuilder : target) {
+            sb.append(stringBuilder);
+        }
+        return sb.toString();
 
 	}
 
